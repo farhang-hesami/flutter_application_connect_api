@@ -36,19 +36,55 @@ class _CoinListScreenState extends State<CoinListScreen> {
                   ),
                 ),
               ),
-              trailing: cryptoList![index].changePercent24Hr > 0
-                  ? Icon(
-                      Icons.trending_up,
-                      color: Colors.green,
-                    )
-                  : Icon(
-                      Icons.trending_down,
-                      color: Colors.red,
+              trailing: SizedBox(
+                width: 150.0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(cryptoList![index].priceUsd.toStringAsFixed(2)),
+                        Text(
+                          cryptoList![index]
+                              .changePercent24Hr
+                              .toStringAsFixed(2),
+                        ),
+                      ],
                     ),
+                    SizedBox(
+                      width: 50.0,
+                      child: Center(
+                        child: _getIconChangePercent(
+                            cryptoList![index].changePercent24Hr),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              //cryptoList![index].changePercent24Hr > 0
+              //     ? Icon(
+              //         Icons.trending_up,
+              //         color: Colors.green,
+              //       )
+              //     : Icon(
+              //         Icons.trending_down,
+              //         color: Colors.red,
+              //       ),
             );
           },
         ),
       ),
     );
+  }
+
+  Widget _getIconChangePercent(double percentChange) {
+    return percentChange <= 0
+        ? Icon(Icons.trending_down, size: 24.0, color: Colors.red)
+        : Icon(
+            Icons.trending_up,
+            size: 24.0,
+            color: Colors.green,
+          );
   }
 }
