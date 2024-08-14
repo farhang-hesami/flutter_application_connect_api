@@ -26,11 +26,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(
-              child: SpinKitSquareCircle(
-                color: Colors.white,
-                size: 50.0,
-              ),
+            Image(
+              image: AssetImage('assets/images/logo.png'),
+            ),
+            SizedBox(height: 10.0),
+            SpinKitWave(
+              color: Colors.white,
+              size: 30.0,
             ),
           ],
         ),
@@ -38,15 +40,18 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void getData() async {
+  Future<void> getData() async {
     var response = await Dio().get('https://api.coincap.io/v2/assets');
     List<Crypto> cryptoList = response.data["data"]
         .map<Crypto>((jsonMapObject) => Crypto.fromMapJson(jsonMapObject))
         .toList();
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) {
-        return CoinListScreen(cryptos: cryptoList);
-      },
-    ));
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return CoinListScreen(cryptos: cryptoList);
+        },
+      ),
+    );
   }
 }
